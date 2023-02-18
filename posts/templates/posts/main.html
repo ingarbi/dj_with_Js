@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block scripts %}
 <script src="{% static 'posts/main.js' %}" defer></script>
@@ -11,11 +12,32 @@ posts
 
 {% block content %}
 
-{% comment %}
-    {% for obj in qs %}
-    {{ obj.title }} - {{ obj.body }} <br>
-  {% endfor %}
-{% endcomment %}
+<!-- Modal -->
+  <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" id="post-form">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">+ add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-info mb-2" data-bs-toggle="modal" data-bs-target="#addPostModal">
+    add post
+  </button>
 
   <div id="posts-box" ></div>`
   <div id="spinner-box" class="text-center">
