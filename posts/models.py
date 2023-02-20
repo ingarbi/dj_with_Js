@@ -17,7 +17,7 @@ class Post(models.Model):
     @property
     def like_count(self):
         return self.liked.all().count()
-    
+
     def get_photos(self):
         return self.photo_set.all()
 
