@@ -11,6 +11,12 @@ const alertBox = document.getElementById('alert-box')
 
 const url = window.location.href
 
+const deleted = localStorage.getItem('title')
+if (deleted) {
+  handleAlerts('danger', `deleted ${deleted}`)
+  localStorage.clear()
+}
+
 const getCookie = (name) => {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {

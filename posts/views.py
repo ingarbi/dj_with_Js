@@ -84,5 +84,22 @@ def like_unlike_post(request):
         return JsonResponse({'liked': liked, 'count': obj.like_count})
 
 
-def hello_world_view(request):
-    return JsonResponse({'text': 'hello world'})
+def update_post(request, pk):
+    obj = Post.objects.get(pk=pk)
+    if request.is_ajax():
+        new_title = request.POST.get('title')
+        new_body = request.POST.get('body')
+        obj.title = new_title
+        obj.body = new_body
+        obj.save()
+        return JsonResponse({
+            'title': new_title,
+            'body': new_body,
+        })
+
+
+def delete_post(request, pk):
+    obj = Post.objects.get(pk=pk)
+    if request.is_ajax():
+        obj.delete()
+        return JsonResponse({})
