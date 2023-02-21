@@ -22,7 +22,7 @@ class Post(models.Model):
         return self.photo_set.all()
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('-created',)
 
 
 class Photo(models.Model):
