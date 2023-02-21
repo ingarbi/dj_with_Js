@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Post, Photo
 from django.http import JsonResponse, HttpResponse
 from profiles.models import Profile
 from .forms import PostForm
+from .utils import action_permission
+from django.contrib.auth.decorators import login_required
 
 
 def post_list_and_create(request):
@@ -98,11 +100,14 @@ def update_post(request, pk):
         })
 
 
+@login_required
+@action_permission
 def delete_post(request, pk):
     obj = Post.objects.get(pk=pk)
     if request.is_ajax():
         obj.delete()
-        return JsonResponse({})
+        return JsonResponse({'msg': 'some message'})
+    return redirect('posts:main-board')
 
 
 def image_upload_view(request):
